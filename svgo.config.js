@@ -7,14 +7,17 @@ module.exports = {
       params: {
         overrides: {
           // 保留精靈圖重要屬性 / Preserve important attributes for sprites
-          removeDesc: false,           // 保留描述以維持無障礙功能 / Keep descriptions for accessibility
-          removeUselessDefs: false,    // 保留可能被引用的定義 / Keep defs that might be referenced
-          removeUnusedNS: false,       // 保留命名空間 / Keep namespaces
-          removeUnknownsAndDefaults: false, // 保留未知屬性 / Keep unknown attributes
+          removeDesc: false,                    // 保留描述以維持無障礙功能 / Keep descriptions for accessibility
+          removeUselessDefs: false,             // 保留可能被引用的定義 / Keep defs that might be referenced
+          removeUnusedNS: false,                // 保留命名空間 / Keep namespaces
+          removeUnknownsAndDefaults: false,     // 保留未知屬性 / Keep unknown attributes
+          removeUselessStrokeAndFill: false,    // 保留 stroke 和 fill 屬性 / Keep stroke and fill
+          removeHiddenElems: false,             // 保留隱藏元素 / Keep hidden elements
+          removeEmptyContainers: false,         // 保留空容器 / Keep empty containers
           
           // 清理屬性但保持結構 / Clean up attributes but preserve structure
           cleanupIds: {
-            minify: false,             // 不縮短 ID (對 symbol 引用很重要) / Don't minify IDs (important for symbol references)
+            minify: false,                      // 不縮短 ID (對 symbol 引用很重要) / Don't minify IDs (important for symbol references)
             preserve: ['icon-', 'actions-icon-', 'social-icon-']
           }
         }

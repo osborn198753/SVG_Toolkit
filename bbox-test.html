@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG getBBox() 測試工具 - SVG BBox Inspector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .svg-container {
+            border: 2px dashed #e5e7eb;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bbox-overlay {
+            position: absolute;
+            border: 2px solid #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+            pointer-events: none;
+        }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <h1 class="text-3xl font-bold text-gray-900">📐 SVG getBBox() 測試工具</h1>
+            <p class="text-gray-600 mt-1">測試 SVG 圖示的實際邊界，用於調整 sprite 設定值</p>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <!-- File Upload Section -->
+        <div class="bg-white rounded-lg shadow-sm border p-6 mb-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">📁 上傳 SVG 檔案</h2>
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                <input type="file" id="file-input" accept=".svg" class="hidden">
+                <div id="upload-area" class="cursor-pointer">
+                    <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <p class="text-gray-600">點擊選擇 SVG 檔案或拖放到此處</p>
+                    <p class="text-sm text-gray-500 mt-1">支援 .svg 格式</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SVG Display and Analysis -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- SVG Display -->
+            <div class="bg-white rounded-lg shadow-sm border p-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">🎨 SVG 預覽</h2>
+                <div id="svg-display-container" class="svg-container relative mb-4">
+                    <p class="text-gray-500">請上傳 SVG 檔案</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">預覽大小</label>
+                        <select id="preview-size" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                            <option value="100">100px</option>
+                            <option value="200" selected>200px</option>
+                            <option value="300">300px</option>
+                            <option value="400">400px</option>
+                            <option value="500">500px</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">顯示邊界框</label>
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" id="show-bbox" class="form-checkbox h-5 w-5 text-blue-600" checked>
+                            <span class="ml-2 text-sm text-gray-700">顯示 BBox</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BBox Information -->
+            <div class="bg-white rounded-lg shadow-sm border p-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">📊 邊界資訊</h2>
+                <div id="bbox-info" class="space-y-4">
+                    <p class="text-gray-500">請上傳 SVG 檔案以顯示邊界資訊</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Output -->
+        <div class="bg-white rounded-lg shadow-sm border p-6 mt-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">💻 程式碼輸出</h2>
+            <div id="code-output">
+                <p class="text-gray-500">上傳 SVG 檔案後將顯示相關程式碼</p>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-6">
+            <h3 class="text-lg font-semibold text-blue-900 mb-3">📖 使用說明</h3>
+            <div class="text-blue-800 space-y-2">
+                <p><strong>1. 上傳檔案：</strong>選擇或拖放 SVG 檔案到上方區域</p>
+                <p><strong>2. 檢視邊界：</strong>系統會自動計算並顯示 SVG 的實際邊界框 (BBox)</p>
+                <p><strong>3. 調整設定：</strong>根據邊界資訊調整 viewBox 和其他 sprite 設定</p>
+                <p><strong>4. 複製程式碼：</strong>使用下方產生的程式碼更新您的 sprite 設定</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSVG = null;
+        let bboxOverlay = null;
+
+        // File input handling
+        const fileInput = document.getElementById('file-input');
+        const uploadArea = document.getElementById('upload-area');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        // Drag and drop handling
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('border-blue-500', 'bg-blue-50');
+        });
+
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('border-blue-500', 'bg-blue-50');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('border-blue-500', 'bg-blue-50');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type === 'image/svg+xml') {
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        // Handle uploaded file
+        function handleFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const svgContent = e.target.result;
+                loadSVG(svgContent, file.name);
+            };
+            reader.readAsText(file);
+        }
+
+        // Load and display SVG
+        function loadSVG(svgContent, filename) {
+            const container = document.getElementById('svg-display-container');
+            container.innerHTML = svgContent;
+            
+            currentSVG = container.querySelector('svg');
+            if (currentSVG) {
+                // Style the SVG for display
+                const size = document.getElementById('preview-size').value;
+                currentSVG.style.width = size + 'px';
+                currentSVG.style.height = size + 'px';
+                currentSVG.style.border = '1px solid #e5e7eb';
+                
+                // Wait for SVG to render then calculate bbox
+                setTimeout(() => {
+                    calculateBBox(filename, svgContent);
+                }, 100);
+            }
+        }
+
+        // Calculate bounding box
+        function calculateBBox(filename, svgContent) {
+            if (!currentSVG) return;
+
+            try {
+                // Get bbox of the entire SVG content
+                const bbox = currentSVG.getBBox();
+                
+                // Get original viewBox if exists
+                const originalViewBox = currentSVG.getAttribute('viewBox');
+                const svgWidth = currentSVG.getAttribute('width') || currentSVG.style.width;
+                const svgHeight = currentSVG.getAttribute('height') || currentSVG.style.height;
+
+                displayBBoxInfo(bbox, originalViewBox, svgWidth, svgHeight, filename);
+                showBBoxOverlay(bbox);
+                generateCode(bbox, originalViewBox, filename, svgContent);
+
+            } catch (error) {
+                console.error('Error calculating bbox:', error);
+                document.getElementById('bbox-info').innerHTML = `
+                    <div class="text-red-600">
+                        <p>❌ 無法計算邊界框</p>
+                        <p class="text-sm mt-1">錯誤: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Display bbox information
+        function displayBBoxInfo(bbox, originalViewBox, svgWidth, svgHeight, filename) {
+            const bboxInfo = document.getElementById('bbox-info');
+            
+            bboxInfo.innerHTML = `
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">檔案資訊</h4>
+                        <div class="bg-gray-50 p-3 rounded text-sm space-y-1">
+                            <p><span class="font-medium">檔案名稱:</span> ${filename}</p>
+                            <p><span class="font-medium">原始尺寸:</span> ${svgWidth} × ${svgHeight}</p>
+                            <p><span class="font-medium">原始 ViewBox:</span> ${originalViewBox || '未設定'}</p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">實際邊界 (BBox)</h4>
+                        <div class="bg-red-50 p-3 rounded text-sm space-y-1">
+                            <p><span class="font-medium">X:</span> ${bbox.x.toFixed(2)}</p>
+                            <p><span class="font-medium">Y:</span> ${bbox.y.toFixed(2)}</p>
+                            <p><span class="font-medium">寬度:</span> ${bbox.width.toFixed(2)}</p>
+                            <p><span class="font-medium">高度:</span> ${bbox.height.toFixed(2)}</p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">建議的 ViewBox</h4>
+                        <div class="bg-green-50 p-3 rounded text-sm">
+                            <p class="font-mono">${bbox.x.toFixed(2)} ${bbox.y.toFixed(2)} ${bbox.width.toFixed(2)} ${bbox.height.toFixed(2)}</p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">面積資訊</h4>
+                        <div class="bg-blue-50 p-3 rounded text-sm space-y-1">
+                            <p><span class="font-medium">實際面積:</span> ${(bbox.width * bbox.height).toFixed(2)}</p>
+                            <p><span class="font-medium">長寬比:</span> ${(bbox.width / bbox.height).toFixed(3)}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Show bbox overlay
+        function showBBoxOverlay(bbox) {
+            if (!document.getElementById('show-bbox').checked) return;
+            
+            // Remove existing overlay
+            if (bboxOverlay) {
+                bboxOverlay.remove();
+            }
+
+            if (!currentSVG) return;
+
+            // Calculate scale and position
+            const svgRect = currentSVG.getBoundingClientRect();
+            const containerRect = currentSVG.parentElement.getBoundingClientRect();
+            
+            // Get SVG's viewBox or use default
+            const viewBox = currentSVG.viewBox.baseVal;
+            const viewBoxWidth = viewBox.width || parseFloat(currentSVG.getAttribute('width')) || 100;
+            const viewBoxHeight = viewBox.height || parseFloat(currentSVG.getAttribute('height')) || 100;
+            
+            // Calculate scale
+            const scaleX = svgRect.width / viewBoxWidth;
+            const scaleY = svgRect.height / viewBoxHeight;
+            
+            // Create overlay
+            bboxOverlay = document.createElement('div');
+            bboxOverlay.className = 'bbox-overlay';
+            
+            const overlayX = (bbox.x - viewBox.x) * scaleX;
+            const overlayY = (bbox.y - viewBox.y) * scaleY;
+            const overlayWidth = bbox.width * scaleX;
+            const overlayHeight = bbox.height * scaleY;
+            
+            bboxOverlay.style.left = (svgRect.left - containerRect.left + overlayX) + 'px';
+            bboxOverlay.style.top = (svgRect.top - containerRect.top + overlayY) + 'px';
+            bboxOverlay.style.width = overlayWidth + 'px';
+            bboxOverlay.style.height = overlayHeight + 'px';
+            
+            currentSVG.parentElement.appendChild(bboxOverlay);
+        }
+
+        // Generate code snippets
+        function generateCode(bbox, originalViewBox, filename, svgContent) {
+            const newViewBox = `${bbox.x.toFixed(2)} ${bbox.y.toFixed(2)} ${bbox.width.toFixed(2)} ${bbox.height.toFixed(2)}`;
+            
+            const codeOutput = document.getElementById('code-output');
+            codeOutput.innerHTML = `
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">1. 更新 ViewBox 屬性</h4>
+                        <div class="code-block">
+&lt;svg viewBox="${newViewBox}"&gt;
+  &lt;!-- SVG 內容 --&gt;
+&lt;/svg&gt;
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">2. Symbol 格式 (用於 Sprite)</h4>
+                        <div class="code-block">
+&lt;symbol id="your-icon-id" viewBox="${newViewBox}"&gt;
+  &lt;!-- 將原始 SVG 內容貼在這裡 --&gt;
+&lt;/symbol&gt;
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">3. Manifest 設定</h4>
+                        <div class="code-block">
+{
+  "id": "your-icon-id",
+  "symbolId": "icon-your-id",
+  "viewBox": "${newViewBox}",
+  "bbox": {
+    "x": ${bbox.x.toFixed(2)},
+    "y": ${bbox.y.toFixed(2)},
+    "width": ${bbox.width.toFixed(2)},
+    "height": ${bbox.height.toFixed(2)}
+  }
+}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">4. 優化建議</h4>
+                        <div class="bg-yellow-50 border border-yellow-200 p-4 rounded">
+                            <ul class="text-sm text-yellow-800 space-y-1">
+                                ${bbox.x !== 0 || bbox.y !== 0 ? 
+                                    '<li>• 圖示有偏移，建議調整座標使其從 (0,0) 開始</li>' : 
+                                    '<li>• ✓ 圖示座標正確，從 (0,0) 開始</li>'
+                                }
+                                ${(bbox.width / bbox.height) === 1 ? 
+                                    '<li>• ✓ 長寬比為 1:1，適合作為圖示</li>' : 
+                                    '<li>• 長寬比不是 1:1，可能需要調整或裁切</li>'
+                                }
+                                ${bbox.width > 1000 || bbox.height > 1000 ? 
+                                    '<li>• 圖示尺寸較大，建議優化以減少檔案大小</li>' : 
+                                    '<li>• ✓ 圖示尺寸適中</li>'
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Event listeners
+        document.getElementById('preview-size').addEventListener('change', () => {
+            if (currentSVG) {
+                const size = document.getElementById('preview-size').value;
+                currentSVG.style.width = size + 'px';
+                currentSVG.style.height = size + 'px';
+                
+                // Recalculate overlay
+                setTimeout(() => {
+                    if (currentSVG) {
+                        const bbox = currentSVG.getBBox();
+                        showBBoxOverlay(bbox);
+                    }
+                }, 100);
+            }
+        });
+
+        document.getElementById('show-bbox').addEventListener('change', () => {
+            if (bboxOverlay) {
+                bboxOverlay.style.display = document.getElementById('show-bbox').checked ? 'block' : 'none';
+            }
+        });
+
+        console.log('📐 BBox 測試工具載入完成！');
+    </script>
+</body>
+</html>

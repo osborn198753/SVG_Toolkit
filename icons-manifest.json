@@ -1,0 +1,478 @@
+{
+    "metadata": {
+        "version": "2.0.0",
+        "lastUpdated": "2025-08-16",
+        "totalIcons": 18,
+        "source": "svg-sprite-system",
+        "description": "SVG icons manifest for unified sprite-based icon system",
+        "spriteFile": "sprite-icons.svg"
+    },
+    "categories": {
+        "common": {
+            "name": "Common Icons",
+            "description": "General purpose icons used across the application",
+            "color": "#3B82F6"
+        },
+        "actions": {
+            "name": "功能圖示",
+            "description": "電商功能相關圖示",
+            "color": "#F59E0B"
+        },
+        "social": {
+            "name": "Social Icons",
+            "description": "Social media and contact icons",
+            "color": "#10B981"
+        },
+        "brand": {
+            "name": "Brand Icons",
+            "description": "Brand and company logo icons",
+            "color": "#6366F1"
+        }
+    },
+    "icons": [
+        {
+            "id": "search",
+            "symbolId": "icon-search",
+            "name": "Search",
+            "category": "common",
+            "description": "搜尋功能圖示",
+            "keywords": [
+                "search",
+                "find",
+                "lookup",
+                "搜尋",
+                "查找"
+            ],
+            "usage": [
+                "header",
+                "search-bar",
+                "navigation"
+            ],
+            "viewBox": "0 0 24 24",
+            "hasStroke": true,
+            "hasFill": false,
+            "strokeWidth": 2,
+            "accessibility": {
+                "ariaLabel": "搜尋",
+                "role": "img"
+            },
+            "variants": [
+                "outline"
+            ],
+            "status": "active",
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "cart",
+            "symbolId": "icon-cart",
+            "name": "Shopping Cart",
+            "category": "common",
+            "description": "購物車圖示",
+            "keywords": [
+                "cart",
+                "shopping",
+                "purchase",
+                "buy",
+                "購物車",
+                "購買"
+            ],
+            "usage": [
+                "header",
+                "e-commerce",
+                "shopping"
+            ],
+            "viewBox": "0 0 24 24",
+            "hasStroke": true,
+            "hasFill": false,
+            "strokeWidth": 2,
+            "accessibility": {
+                "ariaLabel": "購物車",
+                "role": "img"
+            },
+            "variants": [
+                "outline"
+            ],
+            "status": "active",
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "user",
+            "symbolId": "icon-user",
+            "name": "User Profile",
+            "category": "common",
+            "description": "用戶個人檔案圖示",
+            "keywords": [
+                "user",
+                "profile",
+                "account",
+                "person",
+                "用戶",
+                "個人檔案"
+            ],
+            "usage": [
+                "header",
+                "profile",
+                "authentication"
+            ],
+            "viewBox": "0 0 24 24",
+            "hasStroke": true,
+            "hasFill": false,
+            "strokeWidth": 2,
+            "accessibility": {
+                "ariaLabel": "用戶個人檔案",
+                "role": "img"
+            },
+            "variants": [
+                "outline"
+            ],
+            "status": "active",
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "menu",
+            "symbolId": "icon-menu",
+            "name": "Menu",
+            "category": "common",
+            "description": "選單圖示（漢堡選單）",
+            "keywords": [
+                "menu",
+                "hamburger",
+                "navigation",
+                "toggle",
+                "選單",
+                "導航"
+            ],
+            "usage": [
+                "header",
+                "navigation",
+                "mobile-menu"
+            ],
+            "viewBox": "0 0 24 24",
+            "hasStroke": true,
+            "hasFill": false,
+            "strokeWidth": 2,
+            "accessibility": {
+                "ariaLabel": "主選單",
+                "role": "button"
+            },
+            "variants": [
+                "outline"
+            ],
+            "status": "active",
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "benefits",
+            "symbolId": "actions-icon-benefits",
+            "name": "會員福利",
+            "category": "actions",
+            "description": "會員福利圖示",
+            "keywords": [
+                "benefits",
+                "會員福利",
+                "actions",
+                "功能"
+            ],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": {
+                "ariaLabel": "會員福利圖示",
+                "role": "img"
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "delivery",
+            "symbolId": "actions-icon-delivery",
+            "name": "當日配送",
+            "category": "actions",
+            "description": "當日配送圖示",
+            "keywords": [
+                "delivery",
+                "當日配送",
+                "actions",
+                "功能"
+            ],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": {
+                "ariaLabel": "當日配送圖示",
+                "role": "img"
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "store",
+            "symbolId": "actions-icon-store",
+            "name": "合作門市",
+            "category": "actions",
+            "description": "合作門市圖示",
+            "keywords": [
+                "store",
+                "合作門市",
+                "actions",
+                "功能"
+            ],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": {
+                "ariaLabel": "合作門市圖示",
+                "role": "img"
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "bundle",
+            "symbolId": "actions-icon-bundle",
+            "name": "組合優惠",
+            "category": "actions",
+            "description": "組合優惠圖示",
+            "keywords": [
+                "bundle",
+                "組合優惠",
+                "actions",
+                "功能"
+            ],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": {
+                "ariaLabel": "組合優惠圖示",
+                "role": "img"
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "choose",
+            "symbolId": "actions-icon-choose",
+            "name": "限時精選",
+            "category": "actions",
+            "description": "限時精選圖示",
+            "keywords": [
+                "choose",
+                "限時精選",
+                "actions",
+                "功能"
+            ],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": {
+                "ariaLabel": "限時精選圖示",
+                "role": "img"
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "best",
+            "symbolId": "actions-icon-best",
+            "name": "熱銷商品",
+            "category": "actions",
+            "description": "熱銷商品圖示",
+            "keywords": [
+                "best",
+                "熱銷商品",
+                "actions",
+                "功能"
+            ],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": {
+                "ariaLabel": "熱銷商品圖示",
+                "role": "img"
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "brand",
+            "symbolId": "actions-icon-brand",
+            "name": "精選品牌",
+            "category": "actions",
+            "description": "精選品牌圖示",
+            "keywords": [
+                "brand",
+                "精選品牌",
+                "actions",
+                "功能"
+            ],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": {
+                "ariaLabel": "精選品牌圖示",
+                "role": "img"
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "glass",
+            "symbolId": "actions-icon-glass",
+            "name": "眼鏡 1+1",
+            "category": "actions",
+            "description": "眼鏡 1+1圖示",
+            "keywords": [
+                "glass",
+                "眼鏡 1+1",
+                "actions",
+                "功能"
+            ],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": {
+                "ariaLabel": "眼鏡 1+1圖示",
+                "role": "img"
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "facebook",
+            "symbolId": "social-icon-facebook",
+            "name": "Facebook",
+            "category": "social",
+            "description": "Facebook 品牌圖示",
+            "keywords": ["facebook", "社群", "社交"],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": { 
+                "ariaLabel": "Facebook 圖示", 
+                "role": "img" 
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "instagram",
+            "symbolId": "social-icon-instagram",
+            "name": "Instagram",
+            "category": "social",
+            "description": "Instagram 品牌圖示",
+            "keywords": ["instagram", "社群", "社交"],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": { 
+                "ariaLabel": "Instagram 圖示", 
+                "role": "img" 
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "line",
+            "symbolId": "social-icon-line",
+            "name": "LINE",
+            "category": "social",
+            "description": "LINE 品牌圖示",
+            "keywords": ["line", "社群", "社交"],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": { 
+                "ariaLabel": "LINE 圖示", 
+                "role": "img" 
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "line-origin",
+            "symbolId": "social-icon-line-origin",
+            "name": "LINE 官方原生",
+            "category": "social",
+            "description": "LINE 官方抓取且已計算 logo 實際範圍的版本",
+            "keywords": ["line", "official", "origin", "社群", "社交"],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": { 
+                "ariaLabel": "LINE 圖示（原生）", 
+                "role": "img" 
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "envelope",
+            "symbolId": "social-icon-envelope",
+            "name": "Envelope",
+            "category": "social",
+            "description": "電子郵件信封圖示",
+            "keywords": ["mail", "email", "envelope", "信件"],
+            "viewBox": "0 0 24 24",
+            "status": "active",
+            "accessibility": { 
+                "ariaLabel": "電子郵件圖示", 
+                "role": "img" 
+            },
+            "addedDate": "2025-08-04"
+        },
+        {
+            "id": "logo",
+            "symbolId": "brand-logo",
+            "name": "Brand Logo",
+            "category": "brand",
+            "description": "品牌標誌圖示",
+            "keywords": ["logo", "brand", "company", "品牌", "標誌"],
+            "viewBox": "0 0 872 191",
+            "status": "active",
+            "accessibility": { 
+                "ariaLabel": "品牌標誌", 
+                "role": "img" 
+            },
+            "addedDate": "2025-08-16"
+        }
+    ],
+    "plannedIcons": [
+        {
+            "id": "heart",
+            "symbolId": "icon-heart",
+            "name": "Heart",
+            "category": "common",
+            "description": "愛心/收藏圖示",
+            "priority": "medium",
+            "estimatedDate": "2025-09-01"
+        },
+        {
+            "id": "share",
+            "symbolId": "icon-share",
+            "name": "Share",
+            "category": "common",
+            "description": "分享圖示",
+            "priority": "medium",
+            "estimatedDate": "2025-09-01"
+        },
+        {
+            "id": "close",
+            "symbolId": "icon-close",
+            "name": "Close",
+            "category": "common",
+            "description": "關閉圖示",
+            "priority": "high",
+            "estimatedDate": "2025-08-30"
+        }
+    ],
+    "usageStatistics": {
+        "mostUsed": [
+            "search",
+            "menu",
+            "user"
+        ],
+        "leastUsed": [
+            "cart"
+        ],
+        "byCategory": {
+            "common": 4,
+            "actions": 8,
+            "social": 5,
+            "brand": 1
+        }
+    },
+    "designTokens": {
+        "defaultStrokeWidth": 2,
+        "defaultViewBox": "0 0 24 24",
+        "recommendedSizes": [
+            "16px",
+            "20px",
+            "24px",
+            "32px"
+        ],
+        "colorScheme": "currentColor"
+    },
+    "system": {
+        "spriteMethod": "symbol-based",
+        "loadingStrategy": "single-file",
+        "domInjection": true,
+        "cacheStrategy": "browser-cache",
+        "fallbackStrategy": "graceful-degradation"
+    }
+}

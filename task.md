@@ -19,3 +19,10 @@
 透過 svgo 套件，壓縮整理 svg 圖檔
 
 ## 測試的 html，及放要測試的 svg 的資料夾
+
+---
+
+## html
+
+- show all icon . use tailwind css v4 cdn
+- getbbox() test

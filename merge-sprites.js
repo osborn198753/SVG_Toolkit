@@ -2,12 +2,12 @@
 const fs = require('fs');
 const path = require('path');
 
-// 輸入檔案 / Input files
+// 輸入檔案 / Input files (只包含 symbol 格式的檔案)
 const inputFiles = [
   '_old/common-icons.svg',
   '_old/actions-icons.svg', 
-  '_old/social-icons.svg',
-  '_old/logo.svg'
+  '_old/social-icons.svg'
+  // 注意: logo.svg 不是 symbol 格式，所以暫時跳過
 ];
 
 // 輸出檔案 / Output file

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Icons Showcase - 圖示展示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        actions: '#F59E0B', 
+                        social: '#10B981',
+                        brand: '#6366F1'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">🎨 SVG Icons Showcase</h1>
+                    <p class="text-gray-600 mt-1">整合式精靈圖示系統展示 - Unified Sprite Icon System</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full" id="total-count">
+                        18 Icons
+                    </span>
+                    <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">
+                        v2.0.0
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Controls -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="bg-white rounded-lg shadow-sm border p-6 mb-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">🔧 控制面板</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">圖示大小</label>
+                    <select id="icon-size" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="16">16px</option>
+                        <option value="20">20px</option>
+                        <option value="24" selected>24px</option>
+                        <option value="32">32px</option>
+                        <option value="48">48px</option>
+                        <option value="64">64px</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">圖示顏色</label>
+                    <input type="color" id="icon-color" value="#374151" 
+                           class="w-full h-10 border border-gray-300 rounded-md cursor-pointer">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">分類篩選</label>
+                    <select id="category-filter" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="all">全部分類</option>
+                        <option value="common">Common Icons</option>
+                        <option value="actions">功能圖示</option>
+                        <option value="social">Social Icons</option>
+                        <option value="brand">Brand Icons</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">搜尋圖示</label>
+                    <input type="text" id="search-input" placeholder="輸入關鍵字搜尋..." 
+                           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Example -->
+        <div class="bg-white rounded-lg shadow-sm border p-6 mb-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">📝 使用範例</h2>
+            <div class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm font-mono overflow-x-auto">
+<span class="text-gray-500">// 1. 載入圖示系統</span>
+<span class="text-blue-400">import</span> { loadAllIcons, createIconSVG } <span class="text-blue-400">from</span> <span class="text-yellow-300">'./index.js'</span>;
+
+<span class="text-gray-500">// 2. 載入所有圖示到 DOM</span>
+<span class="text-purple-400">loadAllIcons</span>();
+
+<span class="text-gray-500">// 3. 動態建立圖示</span>
+<span class="text-blue-400">const</span> searchIcon = <span class="text-purple-400">createIconSVG</span>(<span class="text-yellow-300">'search'</span>, {
+  className: <span class="text-yellow-300">'w-6 h-6'</span>,
+  ariaLabel: <span class="text-yellow-300">'搜尋'</span>
+});
+
+<span class="text-gray-500">// 4. 直接使用 HTML</span>
+<span class="text-red-400">&lt;svg</span> <span class="text-green-300">class</span>=<span class="text-yellow-300">"w-6 h-6"</span> <span class="text-green-300">fill</span>=<span class="text-yellow-300">"currentColor"</span><span class="text-red-400">&gt;</span>
+  <span class="text-red-400">&lt;use</span> <span class="text-green-300">href</span>=<span class="text-yellow-300">"#icon-search"</span><span class="text-red-400">&gt;&lt;/use&gt;</span>
+<span class="text-red-400">&lt;/svg&gt;</span>
+            </div>
+        </div>
+
+        <!-- Icons Display -->
+        <div id="icons-container">
+            <!-- Icons will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <!-- Sprite container (hidden) -->
+    <div id="sprite-container" style="display: none;"></div>
+
+    <script>
+        // Icons data from manifest
+        const iconsData = {
+            metadata: {
+                version: "2.0.0",
+                totalIcons: 18
+            },
+            categories: {
+                common: { name: "Common Icons", color: "#3B82F6" },
+                actions: { name: "功能圖示", color: "#F59E0B" },
+                social: { name: "Social Icons", color: "#10B981" },
+                brand: { name: "Brand Icons", color: "#6366F1" }
+            },
+            icons: [
+                { id: "search", symbolId: "icon-search", name: "Search", category: "common", description: "搜尋功能圖示" },
+                { id: "cart", symbolId: "icon-cart", name: "Shopping Cart", category: "common", description: "購物車圖示" },
+                { id: "user", symbolId: "icon-user", name: "User Profile", category: "common", description: "用戶個人檔案圖示" },
+                { id: "menu", symbolId: "icon-menu", name: "Menu", category: "common", description: "選單圖示" },
+                { id: "benefits", symbolId: "actions-icon-benefits", name: "會員福利", category: "actions", description: "會員福利圖示" },
+                { id: "delivery", symbolId: "actions-icon-delivery", name: "當日配送", category: "actions", description: "當日配送圖示" },
+                { id: "store", symbolId: "actions-icon-store", name: "合作門市", category: "actions", description: "合作門市圖示" },
+                { id: "bundle", symbolId: "actions-icon-bundle", name: "組合優惠", category: "actions", description: "組合優惠圖示" },
+                { id: "choose", symbolId: "actions-icon-choose", name: "限時精選", category: "actions", description: "限時精選圖示" },
+                { id: "best", symbolId: "actions-icon-best", name: "熱銷商品", category: "actions", description: "熱銷商品圖示" },
+                { id: "brand", symbolId: "actions-icon-brand", name: "精選品牌", category: "actions", description: "精選品牌圖示" },
+                { id: "glass", symbolId: "actions-icon-glass", name: "眼鏡 1+1", category: "actions", description: "眼鏡 1+1圖示" },
+                { id: "facebook", symbolId: "social-icon-facebook", name: "Facebook", category: "social", description: "Facebook 品牌圖示" },
+                { id: "instagram", symbolId: "social-icon-instagram", name: "Instagram", category: "social", description: "Instagram 品牌圖示" },
+                { id: "line", symbolId: "social-icon-line", name: "LINE", category: "social", description: "LINE 品牌圖示" },
+                { id: "line-origin", symbolId: "social-icon-line-origin", name: "LINE 官方原生", category: "social", description: "LINE 官方原生版本" },
+                { id: "envelope", symbolId: "social-icon-envelope", name: "Envelope", category: "social", description: "電子郵件信封圖示" },
+                { id: "logo", symbolId: "brand-logo", name: "Brand Logo", category: "brand", description: "品牌標誌圖示" }
+            ]
+        };
+
+        // Load sprite SVG from file
+        async function loadSprite() {
+            try {
+                const response = await fetch('./sprite-icons.svg');
+                const svgText = await response.text();
+                document.getElementById('sprite-container').innerHTML = svgText;
+                console.log('✅ Sprite loaded successfully');
+            } catch (error) {
+                console.error('❌ Failed to load sprite:', error);
+            }
+        }
+
+        // Create icon SVG element
+        function createIcon(symbolId, size = 24) {
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', size);
+            svg.setAttribute('height', size);
+            svg.setAttribute('viewBox', '0 0 24 24');
+            svg.setAttribute('fill', 'currentColor');
+            svg.className = 'transition-colors duration-200';
+            svg.style.color = document.getElementById('icon-color').value;
+
+            const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+            use.setAttribute('href', `#${symbolId}`);
+            svg.appendChild(use);
+
+            return svg;
+        }
+
+        // Render icons by category
+        function renderIcons(filteredIcons = null) {
+            const container = document.getElementById('icons-container');
+            const iconsToRender = filteredIcons || iconsData.icons;
+            
+            // Group icons by category
+            const groupedIcons = {};
+            iconsToRender.forEach(icon => {
+                if (!groupedIcons[icon.category]) {
+                    groupedIcons[icon.category] = [];
+                }
+                groupedIcons[icon.category].push(icon);
+            });
+
+            container.innerHTML = '';
+
+            Object.entries(groupedIcons).forEach(([categoryId, icons]) => {
+                const category = iconsData.categories[categoryId];
+                if (!category) return;
+
+                const categorySection = document.createElement('div');
+                categorySection.className = 'bg-white rounded-lg shadow-sm border p-6 mb-6';
+                
+                categorySection.innerHTML = `
+                    <div class="flex items-center mb-6">
+                        <div class="w-4 h-4 rounded-full mr-3" style="background-color: ${category.color}"></div>
+                        <h2 class="text-xl font-semibold text-gray-900">${category.name}</h2>
+                        <span class="ml-3 bg-gray-100 text-gray-600 text-sm font-medium px-2 py-1 rounded-full">
+                            ${icons.length} icons
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4" id="category-${categoryId}">
+                    </div>
+                `;
+
+                const iconsGrid = categorySection.querySelector(`#category-${categoryId}`);
+                
+                icons.forEach(icon => {
+                    const iconItem = document.createElement('div');
+                    iconItem.className = 'group p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-md transition-all duration-200 cursor-pointer';
+                    iconItem.setAttribute('data-icon-id', icon.id);
+                    
+                    const iconSvg = createIcon(icon.symbolId);
+                    iconSvg.className = 'mx-auto mb-3 group-hover:scale-110 transition-transform duration-200';
+                    
+                    iconItem.appendChild(iconSvg);
+                    iconItem.innerHTML += `
+                        <div class="text-center">
+                            <h3 class="text-sm font-medium text-gray-900 mb-1">${icon.name}</h3>
+                            <p class="text-xs text-gray-500 mb-2">${icon.description}</p>
+                            <code class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded font-mono">
+                                #${icon.symbolId}
+                            </code>
+                        </div>
+                    `;
+
+                    // Add click to copy functionality
+                    iconItem.addEventListener('click', () => {
+                        const svgCode = `<svg class="w-6 h-6" fill="currentColor">
+  <use href="#${icon.symbolId}"></use>
+</svg>`;
+                        navigator.clipboard.writeText(svgCode).then(() => {
+                            // Show feedback
+                            const originalBorder = iconItem.style.borderColor;
+                            iconItem.style.borderColor = '#10B981';
+                            iconItem.style.backgroundColor = '#F0FDF4';
+                            setTimeout(() => {
+                                iconItem.style.borderColor = originalBorder;
+                                iconItem.style.backgroundColor = '';
+                            }, 500);
+                        });
+                    });
+
+                    iconsGrid.appendChild(iconItem);
+                });
+
+                container.appendChild(categorySection);
+            });
+
+            // Update count
+            document.getElementById('total-count').textContent = `${iconsToRender.length} Icons`;
+        }
+
+        // Filter and search functionality
+        function filterIcons() {
+            const categoryFilter = document.getElementById('category-filter').value;
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            
+            let filteredIcons = iconsData.icons;
+            
+            // Filter by category
+            if (categoryFilter !== 'all') {
+                filteredIcons = filteredIcons.filter(icon => icon.category === categoryFilter);
+            }
+            
+            // Filter by search term
+            if (searchTerm) {
+                filteredIcons = filteredIcons.filter(icon => 
+                    icon.name.toLowerCase().includes(searchTerm) ||
+                    icon.description.toLowerCase().includes(searchTerm) ||
+                    icon.id.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            renderIcons(filteredIcons);
+        }
+
+        // Update icon sizes
+        function updateIconSize() {
+            const size = document.getElementById('icon-size').value;
+            const icons = document.querySelectorAll('#icons-container svg');
+            icons.forEach(icon => {
+                icon.setAttribute('width', size);
+                icon.setAttribute('height', size);
+            });
+        }
+
+        // Update icon colors
+        function updateIconColor() {
+            const color = document.getElementById('icon-color').value;
+            const icons = document.querySelectorAll('#icons-container svg');
+            icons.forEach(icon => {
+                icon.style.color = color;
+            });
+        }
+
+        // Initialize the page
+        async function init() {
+            await loadSprite();
+            renderIcons();
+            
+            // Add event listeners
+            document.getElementById('icon-size').addEventListener('change', updateIconSize);
+            document.getElementById('icon-color').addEventListener('change', updateIconColor);
+            document.getElementById('category-filter').addEventListener('change', filterIcons);
+            document.getElementById('search-input').addEventListener('input', filterIcons);
+            
+            console.log('🎉 Icons showcase initialized successfully!');
+        }
+
+        // Start when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
