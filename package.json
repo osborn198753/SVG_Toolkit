@@ -1,0 +1,20 @@
+{
+  "name": "svg_toolkit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "optimize": "svgo _old/common-icons.svg _old/actions-icons.svg _old/social-icons.svg _old/logo.svg --config=svgo.config.js --pretty",
+    "optimize-sprites": "svgo _old/common-icons.svg _old/actions-icons.svg _old/social-icons.svg _old/logo.svg --config=svgo.config.js --pretty",
+    "optimize-single": "svgo --config=svgo.config.js --pretty",
+    "merge": "node merge-sprites.js",
+    "build": "npm run optimize && npm run merge && svgo sprite-icons.svg --config=svgo.config.js --pretty"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "svgo": "^4.0.0"
+  }
+}
